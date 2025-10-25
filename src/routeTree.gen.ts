@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as PokemonsIndexRouteImport } from './routes/pokemons/index'
 import { Route as DemoTanstackQueryRouteImport } from './routes/demo/tanstack-query'
 import { Route as DemoTableRouteImport } from './routes/demo/table'
 import { Route as DemoStoreRouteImport } from './routes/demo/store'
@@ -19,6 +20,7 @@ import { Route as DemoDrizzleRouteImport } from './routes/demo/drizzle'
 import { Route as DemoDbChatApiRouteImport } from './routes/demo/db-chat-api'
 import { Route as DemoDbChatRouteImport } from './routes/demo/db-chat'
 import { Route as DemoClerkRouteImport } from './routes/demo/clerk'
+import { Route as CollectionGenerationRouteImport } from './routes/collection/$generation'
 import { Route as ApiSplatRouteImport } from './routes/api.$'
 import { Route as DemoStartServerFuncsRouteImport } from './routes/demo/start.server-funcs'
 import { Route as DemoStartApiRequestRouteImport } from './routes/demo/start.api-request'
@@ -35,6 +37,11 @@ import { Route as DemoStartSsrDataOnlyRouteImport } from './routes/demo/start.ss
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PokemonsIndexRoute = PokemonsIndexRouteImport.update({
+  id: '/pokemons/',
+  path: '/pokemons/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DemoTanstackQueryRoute = DemoTanstackQueryRouteImport.update({
@@ -80,6 +87,11 @@ const DemoDbChatRoute = DemoDbChatRouteImport.update({
 const DemoClerkRoute = DemoClerkRouteImport.update({
   id: '/demo/clerk',
   path: '/demo/clerk',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CollectionGenerationRoute = CollectionGenerationRouteImport.update({
+  id: '/collection/$generation',
+  path: '/collection/$generation',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiSplatRoute = ApiSplatRouteImport.update({
@@ -146,6 +158,7 @@ const DemoStartSsrDataOnlyRoute = DemoStartSsrDataOnlyRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/api/$': typeof ApiSplatRoute
+  '/collection/$generation': typeof CollectionGenerationRoute
   '/demo/clerk': typeof DemoClerkRoute
   '/demo/db-chat': typeof DemoDbChatRoute
   '/demo/db-chat-api': typeof DemoDbChatApiRoute
@@ -155,6 +168,7 @@ export interface FileRoutesByFullPath {
   '/demo/store': typeof DemoStoreRoute
   '/demo/table': typeof DemoTableRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
+  '/pokemons': typeof PokemonsIndexRoute
   '/api/rpc/$': typeof ApiRpcSplatRoute
   '/demo/api/names': typeof DemoApiNamesRoute
   '/demo/api/tq-todos': typeof DemoApiTqTodosRoute
@@ -170,6 +184,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/api/$': typeof ApiSplatRoute
+  '/collection/$generation': typeof CollectionGenerationRoute
   '/demo/clerk': typeof DemoClerkRoute
   '/demo/db-chat': typeof DemoDbChatRoute
   '/demo/db-chat-api': typeof DemoDbChatApiRoute
@@ -179,6 +194,7 @@ export interface FileRoutesByTo {
   '/demo/store': typeof DemoStoreRoute
   '/demo/table': typeof DemoTableRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
+  '/pokemons': typeof PokemonsIndexRoute
   '/api/rpc/$': typeof ApiRpcSplatRoute
   '/demo/api/names': typeof DemoApiNamesRoute
   '/demo/api/tq-todos': typeof DemoApiTqTodosRoute
@@ -195,6 +211,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/api/$': typeof ApiSplatRoute
+  '/collection/$generation': typeof CollectionGenerationRoute
   '/demo/clerk': typeof DemoClerkRoute
   '/demo/db-chat': typeof DemoDbChatRoute
   '/demo/db-chat-api': typeof DemoDbChatApiRoute
@@ -204,6 +221,7 @@ export interface FileRoutesById {
   '/demo/store': typeof DemoStoreRoute
   '/demo/table': typeof DemoTableRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
+  '/pokemons/': typeof PokemonsIndexRoute
   '/api/rpc/$': typeof ApiRpcSplatRoute
   '/demo/api/names': typeof DemoApiNamesRoute
   '/demo/api/tq-todos': typeof DemoApiTqTodosRoute
@@ -221,6 +239,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/api/$'
+    | '/collection/$generation'
     | '/demo/clerk'
     | '/demo/db-chat'
     | '/demo/db-chat-api'
@@ -230,6 +249,7 @@ export interface FileRouteTypes {
     | '/demo/store'
     | '/demo/table'
     | '/demo/tanstack-query'
+    | '/pokemons'
     | '/api/rpc/$'
     | '/demo/api/names'
     | '/demo/api/tq-todos'
@@ -245,6 +265,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/api/$'
+    | '/collection/$generation'
     | '/demo/clerk'
     | '/demo/db-chat'
     | '/demo/db-chat-api'
@@ -254,6 +275,7 @@ export interface FileRouteTypes {
     | '/demo/store'
     | '/demo/table'
     | '/demo/tanstack-query'
+    | '/pokemons'
     | '/api/rpc/$'
     | '/demo/api/names'
     | '/demo/api/tq-todos'
@@ -269,6 +291,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/api/$'
+    | '/collection/$generation'
     | '/demo/clerk'
     | '/demo/db-chat'
     | '/demo/db-chat-api'
@@ -278,6 +301,7 @@ export interface FileRouteTypes {
     | '/demo/store'
     | '/demo/table'
     | '/demo/tanstack-query'
+    | '/pokemons/'
     | '/api/rpc/$'
     | '/demo/api/names'
     | '/demo/api/tq-todos'
@@ -294,6 +318,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ApiSplatRoute: typeof ApiSplatRoute
+  CollectionGenerationRoute: typeof CollectionGenerationRoute
   DemoClerkRoute: typeof DemoClerkRoute
   DemoDbChatRoute: typeof DemoDbChatRoute
   DemoDbChatApiRoute: typeof DemoDbChatApiRoute
@@ -303,6 +328,7 @@ export interface RootRouteChildren {
   DemoStoreRoute: typeof DemoStoreRoute
   DemoTableRoute: typeof DemoTableRoute
   DemoTanstackQueryRoute: typeof DemoTanstackQueryRoute
+  PokemonsIndexRoute: typeof PokemonsIndexRoute
   ApiRpcSplatRoute: typeof ApiRpcSplatRoute
   DemoApiNamesRoute: typeof DemoApiNamesRoute
   DemoApiTqTodosRoute: typeof DemoApiTqTodosRoute
@@ -323,6 +349,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pokemons/': {
+      id: '/pokemons/'
+      path: '/pokemons'
+      fullPath: '/pokemons'
+      preLoaderRoute: typeof PokemonsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/demo/tanstack-query': {
@@ -386,6 +419,13 @@ declare module '@tanstack/react-router' {
       path: '/demo/clerk'
       fullPath: '/demo/clerk'
       preLoaderRoute: typeof DemoClerkRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/collection/$generation': {
+      id: '/collection/$generation'
+      path: '/collection/$generation'
+      fullPath: '/collection/$generation'
+      preLoaderRoute: typeof CollectionGenerationRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/$': {
@@ -478,6 +518,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ApiSplatRoute: ApiSplatRoute,
+  CollectionGenerationRoute: CollectionGenerationRoute,
   DemoClerkRoute: DemoClerkRoute,
   DemoDbChatRoute: DemoDbChatRoute,
   DemoDbChatApiRoute: DemoDbChatApiRoute,
@@ -487,6 +528,7 @@ const rootRouteChildren: RootRouteChildren = {
   DemoStoreRoute: DemoStoreRoute,
   DemoTableRoute: DemoTableRoute,
   DemoTanstackQueryRoute: DemoTanstackQueryRoute,
+  PokemonsIndexRoute: PokemonsIndexRoute,
   ApiRpcSplatRoute: ApiRpcSplatRoute,
   DemoApiNamesRoute: DemoApiNamesRoute,
   DemoApiTqTodosRoute: DemoApiTqTodosRoute,
