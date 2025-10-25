@@ -1,9 +1,7 @@
 [build]
-command = "pnpm run build"
-publish = "dist/client"
-environment = { SECRETS_SCAN_OMIT_KEYS = "VITE_CLERK_PUBLISHABLE_KEY" }
-
-[[redirects]]
-from = "/*"
-to = "/index.html"
-status = 200
+  command = "vite build"
+  publish = "dist/client"
+  environment = { SECRETS_SCAN_OMIT_KEYS = "VITE_CLERK_PUBLISHABLE_KEY" }
+[dev]
+  command = "vite dev"
+  port = 3000
