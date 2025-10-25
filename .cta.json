@@ -1,0 +1,29 @@
+{
+  "projectName": "pokemon-living-dex",
+  "mode": "file-router",
+  "typescript": true,
+  "tailwind": true,
+  "packageManager": "pnpm",
+  "addOnOptions": {
+    "drizzle": {
+      "database": "postgresql"
+    }
+  },
+  "git": true,
+  "version": 1,
+  "framework": "react-cra",
+  "chosenAddOns": [
+    "eslint",
+    "neon",
+    "clerk",
+    "db",
+    "drizzle",
+    "form",
+    "oRPC",
+    "shadcn",
+    "table",
+    "start",
+    "store",
+    "tanstack-query"
+  ]
+}
