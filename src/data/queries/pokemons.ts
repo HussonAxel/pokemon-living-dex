@@ -1,5 +1,5 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query'
-
+import { PokeAPI } from 'pokeapi-types'
 const BASE_POKEAPI_URL = 'https://pokeapi.co/api/v2'
 const CURRENT_POKEMON_LIMIT = '?limit=100000'
 
@@ -10,6 +10,8 @@ export const QUERY_KEYS = {
   ITEMS: 'items',
   MOVES: 'moves',
   TYPES: 'types',
+  BERRIES: 'berries',
+  BERRIES_DATA: 'berriesData'
 }
 
 //──────────────────────────────────────────────────────────────────────────────
@@ -51,6 +53,24 @@ if (!res.ok) {
 }
 const data = await res.json()
 return data.results
+}
+
+export const fetchAllBerries = async () => {
+  const res = await fetch (`${BASE_POKEAPI_URL}/berry?limit=-1`)
+  if (!res.ok) {
+    throw new Error('Failed to fetch berries')
+  }
+  const data = await res.json()
+  return data.results
+}
+
+export const fetchAllBerriesData = async ({ berryName }: { berryName: string }) => {
+  const res = await fetch (`${BASE_POKEAPI_URL}/berry/${berryName}`)
+  if (!res.ok) {
+    throw new Error('Failed to fetch berries data')
+  }
+  const data = await res.json()
+  return data
 }
 
 export const fetchAllPokemons = async () => {
@@ -114,6 +134,33 @@ export const useGetAllTypes = () => {
   })
 }
 
+export const useGetAllBerries = () => {
+  return useQuery({
+    queryKey: [QUERY_KEYS.BERRIES],
+    queryFn: fetchAllBerries,
+    placeholderData: (prev) => prev,
+    refetchOnMount: false,
+  })
+}
+
+export const useGetAllBerriesWithData = () => {
+  return useQuery({
+    queryKey: ["berries-all"],
+    queryFn: async () => {
+      const berries = await fetchAllBerries();
+      const detailed = await Promise.all(
+        berries.map((berry: PokeAPI.Berry) =>
+          fetchAllBerriesData({ berryName: berry.name })
+        )
+      );
+      return berries.map((berry: PokeAPI.Berry, idx: number) => ({
+        ...berry,
+        details: detailed[idx],
+      }));
+    },
+  });
+};
+
 export const useGetAllPokemons = () => {
   return useQuery({
     queryKey: ['pokemons'],
@@ -135,6 +182,26 @@ export const useGetPokemonsByRange = (offset: number, limit: number) => {
 //──────────────────────────────────────────────────────────────────────────────
 // HOOKS DE PRÉFETCH (usePrefetch…)
 //──────────────────────────────────────────────────────────────────────────────
+
+export const usePrefetchAllBerriesWithData = () => {
+  const qc = useQueryClient()
+  return () =>
+    qc.ensureQueryData({
+      queryKey: ['berries-all'],
+      queryFn: async () => {
+        const berries = await fetchAllBerries();
+        const detailed = await Promise.all(
+          berries.map((berry: PokeAPI.Berry) =>
+            fetchAllBerriesData({ berryName: berry.name })
+          )
+        );
+        return berries.map((berry: PokeAPI.Berry, idx: number) => ({
+          ...berry,
+          details: detailed[idx],
+        }));
+      },
+    })
+}
 
 export const usePrefetchAllPokemons = () => {
   const qc = useQueryClient()

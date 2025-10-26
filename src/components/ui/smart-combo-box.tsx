@@ -577,7 +577,7 @@ export function SmartCombobox({
       {open && (
         <div
           className={classNames(
-            'absolute z-50 mt-1 w-full overflow-hidden rounded-md bg-[#f1eada] border border-[hsl(var(--border))] shadow-lg',
+            'absolute z-50 mt-1 w-full overflow-hidden rounded-md border border-[hsl(var(--border))] shadow-lg',
             'animate-in fade-in-0 zoom-in-95 data-[closed]:fade-out-0 data-[closed]:zoom-out-95',
           )}
           style={{ maxHeight }}
