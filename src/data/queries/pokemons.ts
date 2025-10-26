@@ -9,6 +9,7 @@ export const QUERY_KEYS = {
   ABILITIES: 'abilities',
   ITEMS: 'items',
   MOVES: 'moves',
+  TYPES: 'types',
 }
 
 //──────────────────────────────────────────────────────────────────────────────
@@ -43,6 +44,15 @@ const data = await res.json()
 return data.results
 }
 
+export const fetchAllTypes = async () => {
+const res = await fetch(`${BASE_POKEAPI_URL}/type?limit=-1`)
+if (!res.ok) {
+  throw new Error('Failed to fetch types')
+}
+const data = await res.json()
+return data.results
+}
+
 export const fetchAllPokemons = async () => {
   const res = await fetch(`${BASE_POKEAPI_URL}/pokemon${CURRENT_POKEMON_LIMIT}`)
   if (!res.ok) {
@@ -62,6 +72,7 @@ export const fetchPokemonByRange = async (offset: number, limit: number) => {
   const data = await res.json()
   return data.results
 }
+
 
 //──────────────────────────────────────────────────────────────────────────────
 // HOOKS DE RÉCUPÉRATION DE DONNÉES (useGet…)
@@ -89,6 +100,15 @@ export const useGetAllMoves = () => {
   return useQuery({
     queryKey: [QUERY_KEYS.MOVES],
     queryFn: fetchAllMoves,
+    placeholderData: (prev) => prev,
+    refetchOnMount: false,
+  })
+}
+
+export const useGetAllTypes = () => {
+  return useQuery({
+    queryKey: [QUERY_KEYS.TYPES],
+    queryFn: fetchAllTypes,
     placeholderData: (prev) => prev,
     refetchOnMount: false,
   })

@@ -10,10 +10,12 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as TypesIndexRouteImport } from './routes/types/index'
 import { Route as PokemonsIndexRouteImport } from './routes/pokemons/index'
 import { Route as MovesIndexRouteImport } from './routes/moves/index'
 import { Route as ItemsIndexRouteImport } from './routes/items/index'
 import { Route as AbilitiesIndexRouteImport } from './routes/abilities/index'
+import { Route as TypesTypeRouteImport } from './routes/types/$type'
 import { Route as PokemonsPokemonRouteImport } from './routes/pokemons/$pokemon'
 import { Route as MovesMoveRouteImport } from './routes/moves/$move'
 import { Route as ItemsItemRouteImport } from './routes/items/$item'
@@ -50,6 +52,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TypesIndexRoute = TypesIndexRouteImport.update({
+  id: '/types/',
+  path: '/types/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PokemonsIndexRoute = PokemonsIndexRouteImport.update({
   id: '/pokemons/',
   path: '/pokemons/',
@@ -68,6 +75,11 @@ const ItemsIndexRoute = ItemsIndexRouteImport.update({
 const AbilitiesIndexRoute = AbilitiesIndexRouteImport.update({
   id: '/abilities/',
   path: '/abilities/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TypesTypeRoute = TypesTypeRouteImport.update({
+  id: '/types/$type',
+  path: '/types/$type',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PokemonsPokemonRoute = PokemonsPokemonRouteImport.update({
@@ -238,10 +250,12 @@ export interface FileRoutesByFullPath {
   '/items/$item': typeof ItemsItemRoute
   '/moves/$move': typeof MovesMoveRoute
   '/pokemons/$pokemon': typeof PokemonsPokemonRoute
+  '/types/$type': typeof TypesTypeRoute
   '/abilities': typeof AbilitiesIndexRoute
   '/items': typeof ItemsIndexRoute
   '/moves': typeof MovesIndexRoute
   '/pokemons': typeof PokemonsIndexRoute
+  '/types': typeof TypesIndexRoute
   '/api/rpc/$': typeof ApiRpcSplatRoute
   '/demo/api/names': typeof DemoApiNamesRoute
   '/demo/api/tq-todos': typeof DemoApiTqTodosRoute
@@ -275,10 +289,12 @@ export interface FileRoutesByTo {
   '/items/$item': typeof ItemsItemRoute
   '/moves/$move': typeof MovesMoveRoute
   '/pokemons/$pokemon': typeof PokemonsPokemonRoute
+  '/types/$type': typeof TypesTypeRoute
   '/abilities': typeof AbilitiesIndexRoute
   '/items': typeof ItemsIndexRoute
   '/moves': typeof MovesIndexRoute
   '/pokemons': typeof PokemonsIndexRoute
+  '/types': typeof TypesIndexRoute
   '/api/rpc/$': typeof ApiRpcSplatRoute
   '/demo/api/names': typeof DemoApiNamesRoute
   '/demo/api/tq-todos': typeof DemoApiTqTodosRoute
@@ -313,10 +329,12 @@ export interface FileRoutesById {
   '/items/$item': typeof ItemsItemRoute
   '/moves/$move': typeof MovesMoveRoute
   '/pokemons/$pokemon': typeof PokemonsPokemonRoute
+  '/types/$type': typeof TypesTypeRoute
   '/abilities/': typeof AbilitiesIndexRoute
   '/items/': typeof ItemsIndexRoute
   '/moves/': typeof MovesIndexRoute
   '/pokemons/': typeof PokemonsIndexRoute
+  '/types/': typeof TypesIndexRoute
   '/api/rpc/$': typeof ApiRpcSplatRoute
   '/demo/api/names': typeof DemoApiNamesRoute
   '/demo/api/tq-todos': typeof DemoApiTqTodosRoute
@@ -352,10 +370,12 @@ export interface FileRouteTypes {
     | '/items/$item'
     | '/moves/$move'
     | '/pokemons/$pokemon'
+    | '/types/$type'
     | '/abilities'
     | '/items'
     | '/moves'
     | '/pokemons'
+    | '/types'
     | '/api/rpc/$'
     | '/demo/api/names'
     | '/demo/api/tq-todos'
@@ -389,10 +409,12 @@ export interface FileRouteTypes {
     | '/items/$item'
     | '/moves/$move'
     | '/pokemons/$pokemon'
+    | '/types/$type'
     | '/abilities'
     | '/items'
     | '/moves'
     | '/pokemons'
+    | '/types'
     | '/api/rpc/$'
     | '/demo/api/names'
     | '/demo/api/tq-todos'
@@ -426,10 +448,12 @@ export interface FileRouteTypes {
     | '/items/$item'
     | '/moves/$move'
     | '/pokemons/$pokemon'
+    | '/types/$type'
     | '/abilities/'
     | '/items/'
     | '/moves/'
     | '/pokemons/'
+    | '/types/'
     | '/api/rpc/$'
     | '/demo/api/names'
     | '/demo/api/tq-todos'
@@ -464,10 +488,12 @@ export interface RootRouteChildren {
   ItemsItemRoute: typeof ItemsItemRoute
   MovesMoveRoute: typeof MovesMoveRoute
   PokemonsPokemonRoute: typeof PokemonsPokemonRoute
+  TypesTypeRoute: typeof TypesTypeRoute
   AbilitiesIndexRoute: typeof AbilitiesIndexRoute
   ItemsIndexRoute: typeof ItemsIndexRoute
   MovesIndexRoute: typeof MovesIndexRoute
   PokemonsIndexRoute: typeof PokemonsIndexRoute
+  TypesIndexRoute: typeof TypesIndexRoute
   ApiRpcSplatRoute: typeof ApiRpcSplatRoute
   DemoApiNamesRoute: typeof DemoApiNamesRoute
   DemoApiTqTodosRoute: typeof DemoApiTqTodosRoute
@@ -492,6 +518,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/types/': {
+      id: '/types/'
+      path: '/types'
+      fullPath: '/types'
+      preLoaderRoute: typeof TypesIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/pokemons/': {
@@ -520,6 +553,13 @@ declare module '@tanstack/react-router' {
       path: '/abilities'
       fullPath: '/abilities'
       preLoaderRoute: typeof AbilitiesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/types/$type': {
+      id: '/types/$type'
+      path: '/types/$type'
+      fullPath: '/types/$type'
+      preLoaderRoute: typeof TypesTypeRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/pokemons/$pokemon': {
@@ -752,10 +792,12 @@ const rootRouteChildren: RootRouteChildren = {
   ItemsItemRoute: ItemsItemRoute,
   MovesMoveRoute: MovesMoveRoute,
   PokemonsPokemonRoute: PokemonsPokemonRoute,
+  TypesTypeRoute: TypesTypeRoute,
   AbilitiesIndexRoute: AbilitiesIndexRoute,
   ItemsIndexRoute: ItemsIndexRoute,
   MovesIndexRoute: MovesIndexRoute,
   PokemonsIndexRoute: PokemonsIndexRoute,
+  TypesIndexRoute: TypesIndexRoute,
   ApiRpcSplatRoute: ApiRpcSplatRoute,
   DemoApiNamesRoute: DemoApiNamesRoute,
   DemoApiTqTodosRoute: DemoApiTqTodosRoute,
