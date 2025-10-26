@@ -305,7 +305,6 @@ export default function Header() {
             <Network size={20} />
             <span className="font-medium">TanStack Query</span>
           </Link>
-
           {/* Demo Links End */}
         </nav>
 
