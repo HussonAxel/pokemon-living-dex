@@ -11,6 +11,12 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as PokemonsIndexRouteImport } from './routes/pokemons/index'
+import { Route as MovesIndexRouteImport } from './routes/moves/index'
+import { Route as ItemsIndexRouteImport } from './routes/items/index'
+import { Route as AbilitiesIndexRouteImport } from './routes/abilities/index'
+import { Route as PokemonsPokemonRouteImport } from './routes/pokemons/$pokemon'
+import { Route as MovesMoveRouteImport } from './routes/moves/$move'
+import { Route as ItemsItemRouteImport } from './routes/items/$item'
 import { Route as DemoTanstackQueryRouteImport } from './routes/demo/tanstack-query'
 import { Route as DemoTableRouteImport } from './routes/demo/table'
 import { Route as DemoStoreRouteImport } from './routes/demo/store'
@@ -22,6 +28,11 @@ import { Route as DemoDbChatRouteImport } from './routes/demo/db-chat'
 import { Route as DemoClerkRouteImport } from './routes/demo/clerk'
 import { Route as CollectionGenerationRouteImport } from './routes/collection/$generation'
 import { Route as ApiSplatRouteImport } from './routes/api.$'
+import { Route as AbilitiesAbilityRouteImport } from './routes/abilities/$ability'
+import { Route as TcgpCardsIndexRouteImport } from './routes/tcgp/cards/index'
+import { Route as TcgCardsIndexRouteImport } from './routes/tcg/cards/index'
+import { Route as TcgpCardsCardRouteImport } from './routes/tcgp/cards/$card'
+import { Route as TcgCardsCardRouteImport } from './routes/tcg/cards/$card'
 import { Route as DemoStartServerFuncsRouteImport } from './routes/demo/start.server-funcs'
 import { Route as DemoStartApiRequestRouteImport } from './routes/demo/start.api-request'
 import { Route as DemoFormSimpleRouteImport } from './routes/demo/form.simple'
@@ -42,6 +53,36 @@ const IndexRoute = IndexRouteImport.update({
 const PokemonsIndexRoute = PokemonsIndexRouteImport.update({
   id: '/pokemons/',
   path: '/pokemons/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MovesIndexRoute = MovesIndexRouteImport.update({
+  id: '/moves/',
+  path: '/moves/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ItemsIndexRoute = ItemsIndexRouteImport.update({
+  id: '/items/',
+  path: '/items/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AbilitiesIndexRoute = AbilitiesIndexRouteImport.update({
+  id: '/abilities/',
+  path: '/abilities/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PokemonsPokemonRoute = PokemonsPokemonRouteImport.update({
+  id: '/pokemons/$pokemon',
+  path: '/pokemons/$pokemon',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MovesMoveRoute = MovesMoveRouteImport.update({
+  id: '/moves/$move',
+  path: '/moves/$move',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ItemsItemRoute = ItemsItemRouteImport.update({
+  id: '/items/$item',
+  path: '/items/$item',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DemoTanstackQueryRoute = DemoTanstackQueryRouteImport.update({
@@ -97,6 +138,31 @@ const CollectionGenerationRoute = CollectionGenerationRouteImport.update({
 const ApiSplatRoute = ApiSplatRouteImport.update({
   id: '/api/$',
   path: '/api/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AbilitiesAbilityRoute = AbilitiesAbilityRouteImport.update({
+  id: '/abilities/$ability',
+  path: '/abilities/$ability',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TcgpCardsIndexRoute = TcgpCardsIndexRouteImport.update({
+  id: '/tcgp/cards/',
+  path: '/tcgp/cards/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TcgCardsIndexRoute = TcgCardsIndexRouteImport.update({
+  id: '/tcg/cards/',
+  path: '/tcg/cards/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TcgpCardsCardRoute = TcgpCardsCardRouteImport.update({
+  id: '/tcgp/cards/$card',
+  path: '/tcgp/cards/$card',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TcgCardsCardRoute = TcgCardsCardRouteImport.update({
+  id: '/tcg/cards/$card',
+  path: '/tcg/cards/$card',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DemoStartServerFuncsRoute = DemoStartServerFuncsRouteImport.update({
@@ -157,6 +223,7 @@ const DemoStartSsrDataOnlyRoute = DemoStartSsrDataOnlyRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/abilities/$ability': typeof AbilitiesAbilityRoute
   '/api/$': typeof ApiSplatRoute
   '/collection/$generation': typeof CollectionGenerationRoute
   '/demo/clerk': typeof DemoClerkRoute
@@ -168,6 +235,12 @@ export interface FileRoutesByFullPath {
   '/demo/store': typeof DemoStoreRoute
   '/demo/table': typeof DemoTableRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
+  '/items/$item': typeof ItemsItemRoute
+  '/moves/$move': typeof MovesMoveRoute
+  '/pokemons/$pokemon': typeof PokemonsPokemonRoute
+  '/abilities': typeof AbilitiesIndexRoute
+  '/items': typeof ItemsIndexRoute
+  '/moves': typeof MovesIndexRoute
   '/pokemons': typeof PokemonsIndexRoute
   '/api/rpc/$': typeof ApiRpcSplatRoute
   '/demo/api/names': typeof DemoApiNamesRoute
@@ -176,6 +249,10 @@ export interface FileRoutesByFullPath {
   '/demo/form/simple': typeof DemoFormSimpleRoute
   '/demo/start/api-request': typeof DemoStartApiRequestRoute
   '/demo/start/server-funcs': typeof DemoStartServerFuncsRoute
+  '/tcg/cards/$card': typeof TcgCardsCardRoute
+  '/tcgp/cards/$card': typeof TcgpCardsCardRoute
+  '/tcg/cards': typeof TcgCardsIndexRoute
+  '/tcgp/cards': typeof TcgpCardsIndexRoute
   '/demo/start/ssr/data-only': typeof DemoStartSsrDataOnlyRoute
   '/demo/start/ssr/full-ssr': typeof DemoStartSsrFullSsrRoute
   '/demo/start/ssr/spa-mode': typeof DemoStartSsrSpaModeRoute
@@ -183,6 +260,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/abilities/$ability': typeof AbilitiesAbilityRoute
   '/api/$': typeof ApiSplatRoute
   '/collection/$generation': typeof CollectionGenerationRoute
   '/demo/clerk': typeof DemoClerkRoute
@@ -194,6 +272,12 @@ export interface FileRoutesByTo {
   '/demo/store': typeof DemoStoreRoute
   '/demo/table': typeof DemoTableRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
+  '/items/$item': typeof ItemsItemRoute
+  '/moves/$move': typeof MovesMoveRoute
+  '/pokemons/$pokemon': typeof PokemonsPokemonRoute
+  '/abilities': typeof AbilitiesIndexRoute
+  '/items': typeof ItemsIndexRoute
+  '/moves': typeof MovesIndexRoute
   '/pokemons': typeof PokemonsIndexRoute
   '/api/rpc/$': typeof ApiRpcSplatRoute
   '/demo/api/names': typeof DemoApiNamesRoute
@@ -202,6 +286,10 @@ export interface FileRoutesByTo {
   '/demo/form/simple': typeof DemoFormSimpleRoute
   '/demo/start/api-request': typeof DemoStartApiRequestRoute
   '/demo/start/server-funcs': typeof DemoStartServerFuncsRoute
+  '/tcg/cards/$card': typeof TcgCardsCardRoute
+  '/tcgp/cards/$card': typeof TcgpCardsCardRoute
+  '/tcg/cards': typeof TcgCardsIndexRoute
+  '/tcgp/cards': typeof TcgpCardsIndexRoute
   '/demo/start/ssr/data-only': typeof DemoStartSsrDataOnlyRoute
   '/demo/start/ssr/full-ssr': typeof DemoStartSsrFullSsrRoute
   '/demo/start/ssr/spa-mode': typeof DemoStartSsrSpaModeRoute
@@ -210,6 +298,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/abilities/$ability': typeof AbilitiesAbilityRoute
   '/api/$': typeof ApiSplatRoute
   '/collection/$generation': typeof CollectionGenerationRoute
   '/demo/clerk': typeof DemoClerkRoute
@@ -221,6 +310,12 @@ export interface FileRoutesById {
   '/demo/store': typeof DemoStoreRoute
   '/demo/table': typeof DemoTableRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
+  '/items/$item': typeof ItemsItemRoute
+  '/moves/$move': typeof MovesMoveRoute
+  '/pokemons/$pokemon': typeof PokemonsPokemonRoute
+  '/abilities/': typeof AbilitiesIndexRoute
+  '/items/': typeof ItemsIndexRoute
+  '/moves/': typeof MovesIndexRoute
   '/pokemons/': typeof PokemonsIndexRoute
   '/api/rpc/$': typeof ApiRpcSplatRoute
   '/demo/api/names': typeof DemoApiNamesRoute
@@ -229,6 +324,10 @@ export interface FileRoutesById {
   '/demo/form/simple': typeof DemoFormSimpleRoute
   '/demo/start/api-request': typeof DemoStartApiRequestRoute
   '/demo/start/server-funcs': typeof DemoStartServerFuncsRoute
+  '/tcg/cards/$card': typeof TcgCardsCardRoute
+  '/tcgp/cards/$card': typeof TcgpCardsCardRoute
+  '/tcg/cards/': typeof TcgCardsIndexRoute
+  '/tcgp/cards/': typeof TcgpCardsIndexRoute
   '/demo/start/ssr/data-only': typeof DemoStartSsrDataOnlyRoute
   '/demo/start/ssr/full-ssr': typeof DemoStartSsrFullSsrRoute
   '/demo/start/ssr/spa-mode': typeof DemoStartSsrSpaModeRoute
@@ -238,6 +337,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/abilities/$ability'
     | '/api/$'
     | '/collection/$generation'
     | '/demo/clerk'
@@ -249,6 +349,12 @@ export interface FileRouteTypes {
     | '/demo/store'
     | '/demo/table'
     | '/demo/tanstack-query'
+    | '/items/$item'
+    | '/moves/$move'
+    | '/pokemons/$pokemon'
+    | '/abilities'
+    | '/items'
+    | '/moves'
     | '/pokemons'
     | '/api/rpc/$'
     | '/demo/api/names'
@@ -257,6 +363,10 @@ export interface FileRouteTypes {
     | '/demo/form/simple'
     | '/demo/start/api-request'
     | '/demo/start/server-funcs'
+    | '/tcg/cards/$card'
+    | '/tcgp/cards/$card'
+    | '/tcg/cards'
+    | '/tcgp/cards'
     | '/demo/start/ssr/data-only'
     | '/demo/start/ssr/full-ssr'
     | '/demo/start/ssr/spa-mode'
@@ -264,6 +374,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/abilities/$ability'
     | '/api/$'
     | '/collection/$generation'
     | '/demo/clerk'
@@ -275,6 +386,12 @@ export interface FileRouteTypes {
     | '/demo/store'
     | '/demo/table'
     | '/demo/tanstack-query'
+    | '/items/$item'
+    | '/moves/$move'
+    | '/pokemons/$pokemon'
+    | '/abilities'
+    | '/items'
+    | '/moves'
     | '/pokemons'
     | '/api/rpc/$'
     | '/demo/api/names'
@@ -283,6 +400,10 @@ export interface FileRouteTypes {
     | '/demo/form/simple'
     | '/demo/start/api-request'
     | '/demo/start/server-funcs'
+    | '/tcg/cards/$card'
+    | '/tcgp/cards/$card'
+    | '/tcg/cards'
+    | '/tcgp/cards'
     | '/demo/start/ssr/data-only'
     | '/demo/start/ssr/full-ssr'
     | '/demo/start/ssr/spa-mode'
@@ -290,6 +411,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/abilities/$ability'
     | '/api/$'
     | '/collection/$generation'
     | '/demo/clerk'
@@ -301,6 +423,12 @@ export interface FileRouteTypes {
     | '/demo/store'
     | '/demo/table'
     | '/demo/tanstack-query'
+    | '/items/$item'
+    | '/moves/$move'
+    | '/pokemons/$pokemon'
+    | '/abilities/'
+    | '/items/'
+    | '/moves/'
     | '/pokemons/'
     | '/api/rpc/$'
     | '/demo/api/names'
@@ -309,6 +437,10 @@ export interface FileRouteTypes {
     | '/demo/form/simple'
     | '/demo/start/api-request'
     | '/demo/start/server-funcs'
+    | '/tcg/cards/$card'
+    | '/tcgp/cards/$card'
+    | '/tcg/cards/'
+    | '/tcgp/cards/'
     | '/demo/start/ssr/data-only'
     | '/demo/start/ssr/full-ssr'
     | '/demo/start/ssr/spa-mode'
@@ -317,6 +449,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AbilitiesAbilityRoute: typeof AbilitiesAbilityRoute
   ApiSplatRoute: typeof ApiSplatRoute
   CollectionGenerationRoute: typeof CollectionGenerationRoute
   DemoClerkRoute: typeof DemoClerkRoute
@@ -328,6 +461,12 @@ export interface RootRouteChildren {
   DemoStoreRoute: typeof DemoStoreRoute
   DemoTableRoute: typeof DemoTableRoute
   DemoTanstackQueryRoute: typeof DemoTanstackQueryRoute
+  ItemsItemRoute: typeof ItemsItemRoute
+  MovesMoveRoute: typeof MovesMoveRoute
+  PokemonsPokemonRoute: typeof PokemonsPokemonRoute
+  AbilitiesIndexRoute: typeof AbilitiesIndexRoute
+  ItemsIndexRoute: typeof ItemsIndexRoute
+  MovesIndexRoute: typeof MovesIndexRoute
   PokemonsIndexRoute: typeof PokemonsIndexRoute
   ApiRpcSplatRoute: typeof ApiRpcSplatRoute
   DemoApiNamesRoute: typeof DemoApiNamesRoute
@@ -336,6 +475,10 @@ export interface RootRouteChildren {
   DemoFormSimpleRoute: typeof DemoFormSimpleRoute
   DemoStartApiRequestRoute: typeof DemoStartApiRequestRoute
   DemoStartServerFuncsRoute: typeof DemoStartServerFuncsRoute
+  TcgCardsCardRoute: typeof TcgCardsCardRoute
+  TcgpCardsCardRoute: typeof TcgpCardsCardRoute
+  TcgCardsIndexRoute: typeof TcgCardsIndexRoute
+  TcgpCardsIndexRoute: typeof TcgpCardsIndexRoute
   DemoStartSsrDataOnlyRoute: typeof DemoStartSsrDataOnlyRoute
   DemoStartSsrFullSsrRoute: typeof DemoStartSsrFullSsrRoute
   DemoStartSsrSpaModeRoute: typeof DemoStartSsrSpaModeRoute
@@ -356,6 +499,48 @@ declare module '@tanstack/react-router' {
       path: '/pokemons'
       fullPath: '/pokemons'
       preLoaderRoute: typeof PokemonsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/moves/': {
+      id: '/moves/'
+      path: '/moves'
+      fullPath: '/moves'
+      preLoaderRoute: typeof MovesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/items/': {
+      id: '/items/'
+      path: '/items'
+      fullPath: '/items'
+      preLoaderRoute: typeof ItemsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/abilities/': {
+      id: '/abilities/'
+      path: '/abilities'
+      fullPath: '/abilities'
+      preLoaderRoute: typeof AbilitiesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pokemons/$pokemon': {
+      id: '/pokemons/$pokemon'
+      path: '/pokemons/$pokemon'
+      fullPath: '/pokemons/$pokemon'
+      preLoaderRoute: typeof PokemonsPokemonRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/moves/$move': {
+      id: '/moves/$move'
+      path: '/moves/$move'
+      fullPath: '/moves/$move'
+      preLoaderRoute: typeof MovesMoveRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/items/$item': {
+      id: '/items/$item'
+      path: '/items/$item'
+      fullPath: '/items/$item'
+      preLoaderRoute: typeof ItemsItemRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/demo/tanstack-query': {
@@ -433,6 +618,41 @@ declare module '@tanstack/react-router' {
       path: '/api/$'
       fullPath: '/api/$'
       preLoaderRoute: typeof ApiSplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/abilities/$ability': {
+      id: '/abilities/$ability'
+      path: '/abilities/$ability'
+      fullPath: '/abilities/$ability'
+      preLoaderRoute: typeof AbilitiesAbilityRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tcgp/cards/': {
+      id: '/tcgp/cards/'
+      path: '/tcgp/cards'
+      fullPath: '/tcgp/cards'
+      preLoaderRoute: typeof TcgpCardsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tcg/cards/': {
+      id: '/tcg/cards/'
+      path: '/tcg/cards'
+      fullPath: '/tcg/cards'
+      preLoaderRoute: typeof TcgCardsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tcgp/cards/$card': {
+      id: '/tcgp/cards/$card'
+      path: '/tcgp/cards/$card'
+      fullPath: '/tcgp/cards/$card'
+      preLoaderRoute: typeof TcgpCardsCardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tcg/cards/$card': {
+      id: '/tcg/cards/$card'
+      path: '/tcg/cards/$card'
+      fullPath: '/tcg/cards/$card'
+      preLoaderRoute: typeof TcgCardsCardRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/demo/start/server-funcs': {
@@ -517,6 +737,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AbilitiesAbilityRoute: AbilitiesAbilityRoute,
   ApiSplatRoute: ApiSplatRoute,
   CollectionGenerationRoute: CollectionGenerationRoute,
   DemoClerkRoute: DemoClerkRoute,
@@ -528,6 +749,12 @@ const rootRouteChildren: RootRouteChildren = {
   DemoStoreRoute: DemoStoreRoute,
   DemoTableRoute: DemoTableRoute,
   DemoTanstackQueryRoute: DemoTanstackQueryRoute,
+  ItemsItemRoute: ItemsItemRoute,
+  MovesMoveRoute: MovesMoveRoute,
+  PokemonsPokemonRoute: PokemonsPokemonRoute,
+  AbilitiesIndexRoute: AbilitiesIndexRoute,
+  ItemsIndexRoute: ItemsIndexRoute,
+  MovesIndexRoute: MovesIndexRoute,
   PokemonsIndexRoute: PokemonsIndexRoute,
   ApiRpcSplatRoute: ApiRpcSplatRoute,
   DemoApiNamesRoute: DemoApiNamesRoute,
@@ -536,6 +763,10 @@ const rootRouteChildren: RootRouteChildren = {
   DemoFormSimpleRoute: DemoFormSimpleRoute,
   DemoStartApiRequestRoute: DemoStartApiRequestRoute,
   DemoStartServerFuncsRoute: DemoStartServerFuncsRoute,
+  TcgCardsCardRoute: TcgCardsCardRoute,
+  TcgpCardsCardRoute: TcgpCardsCardRoute,
+  TcgCardsIndexRoute: TcgCardsIndexRoute,
+  TcgpCardsIndexRoute: TcgpCardsIndexRoute,
   DemoStartSsrDataOnlyRoute: DemoStartSsrDataOnlyRoute,
   DemoStartSsrFullSsrRoute: DemoStartSsrFullSsrRoute,
   DemoStartSsrSpaModeRoute: DemoStartSsrSpaModeRoute,

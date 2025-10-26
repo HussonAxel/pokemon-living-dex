@@ -1,20 +1,21 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { useGetAllPokemons } from '@/data/queries/pokemons'
-export const Route = createFileRoute('/pokemons/')({
+import { useGetAllItems } from '@/data/queries/pokemons'
+
+export const Route = createFileRoute('/items/')({
   component: RouteComponent,
 })
 
 function RouteComponent() {
-  const { data, isLoading, error } = useGetAllPokemons()
+  const { data, isLoading, error } = useGetAllItems()
   if (isLoading) return <div>Loading...</div>
   if (error) return <div>Error: {error.message}</div>
   if (!data) return <div>No data</div>
   return (
     <div>
-      <h1>Pokemons</h1>
+      <h1>Items</h1>
       <ul>
-        {data.map((pokemon: any) => (
-          <li key={pokemon.name}>{pokemon.name}</li>
+        {data.map((item: any) => (
+          <li key={item.name}>{item.name}</li>
         ))}
       </ul>
     </div>
