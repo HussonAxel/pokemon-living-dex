@@ -6,13 +6,14 @@ const CURRENT_POKEMON_LIMIT = '?limit=100000'
 export const QUERY_KEYS = {
   POKEMONS: 'pokemons',
   POKEMON_BY_RANGE: 'pokemonByRange',
+  ABILITY: 'ability',
   ABILITIES: 'abilities',
+  ABILITY_DATA: 'abilityData',
   ITEMS: 'items',
   MOVES: 'moves',
   TYPES: 'types',
-  BERRIES: 'berries',
-  BERRIES_DATA: 'berriesData',
   BERRY: 'berry',
+  BERRIES: 'berries',
   BERRY_DATA: 'berryData',
 }
 
@@ -28,6 +29,15 @@ if (!res.ok) {
 }
 const data = await res.json()
 return data.results
+}
+
+export const fetchAllAbilityData = async ({ abilityName }: { abilityName: string }) => {
+  const res = await fetch (`${BASE_POKEAPI_URL}/ability/${abilityName}`)
+  if (!res.ok) {
+    throw new Error('Failed to fetch ability data')
+  }
+  const data = await res.json()
+  return data
 }
 
 export const fetchAllItems = async () => {
@@ -108,6 +118,24 @@ export const useGetAllAbilities = () => {
     refetchOnMount: false,
   })
 }
+
+export const useGetAllAbilitiesWithData = () => {
+  return useQuery({
+    queryKey: ["abilities-all"],
+    queryFn: async () => {
+      const abilities = await fetchAllAbilities();
+      const detailed = await Promise.all(
+        abilities.map((ability: PokeAPI.Ability) =>
+          fetchAllAbilityData({ abilityName: ability.name })
+        )
+      );
+      return abilities.map((ability: PokeAPI.Ability, idx: number) => ({
+        ...ability,
+        details: detailed[idx],
+      }));
+    },
+  });
+};
 
 export const useGetAllItems = () => {
   return useQuery({
