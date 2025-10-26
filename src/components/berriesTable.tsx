@@ -73,26 +73,6 @@ type Item = {
 
 const columns: ColumnDef<Item>[] = [
   {
-    id: "select",
-    header: ({ table }) => (
-      <Checkbox
-        checked={
-          table.getIsAllPageRowsSelected() ||
-          (table.getIsSomePageRowsSelected() && "indeterminate")
-        }
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
-      />
-    ),
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
-      />
-    ),
-  },
-  {
     header: "Image",
     accessorKey: "image",
     cell: ({ row }) => (
@@ -114,7 +94,7 @@ const columns: ColumnDef<Item>[] = [
     header: "Name",
     accessorKey: "name",
     cell: ({ row }) => (
-      <div className="font-medium capitalize">{row.getValue("name")}</div>
+      <div className="capitalize font-semibold">{row.getValue("name")}</div>
     ),
     meta: {
       filterVariant: "text",
@@ -155,7 +135,7 @@ const columns: ColumnDef<Item>[] = [
               <div
                 key={flavor.flavor.name}
                 className={cn(
-                  "flex items-center justify-center px-2 py-1 rounded text-xs font-medium",
+                  "flex items-center justify-center px-2 py-1 rounded text-xs font-semibold",
                   colorClass
                 )}
               >
@@ -303,7 +283,7 @@ function BerriesTableContent({ items }: { items: Item[] }) {
                       <div
                         className={cn(
                           header.column.getCanSort() &&
-                            "flex h-full cursor-pointer items-center justify-between gap-2 select-none font-semibold py-2"
+                            "flex h-full cursor-pointer items-center justify-between gap-2 select-none font-semibold py-4"
                         )}
                         onClick={header.column.getToggleSortingHandler()}
                         onKeyDown={(e) => {
