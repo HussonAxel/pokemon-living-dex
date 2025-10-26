@@ -23,7 +23,6 @@ import {
 } from "lucide-react"
 
 import { cn } from "@/lib/utils"
-import { Checkbox } from "@/components/ui/checkbox"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import {
@@ -95,6 +94,16 @@ const columns: ColumnDef<Item>[] = [
     accessorKey: "name",
     cell: ({ row }) => (
       <div className="capitalize font-semibold">{row.getValue("name")}</div>
+    ),
+    meta: {
+      filterVariant: "text",
+    },
+  },
+  {
+    header: "Effect", 
+    accessorKey: "effect",
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("effect")}</div>
     ),
     meta: {
       filterVariant: "text",
@@ -371,6 +380,7 @@ export default function BerriesTable() {
     id: berry.details?.id || 0,
     name: berry.name,
     image: `https://raw.githubusercontent.com/PokeAPI/sprites/refs/heads/master/sprites/items/berries/${berry.name}-berry.png`,
+    effect: berry.item?.effect_entries[0]?.short_effect || "unknown",
     firmness: berry.details?.firmness?.name || "unknown",
     flavors: berry.details?.flavors || [],
     growthTime: berry.details?.growth_time || 0,

@@ -153,9 +153,17 @@ export const useGetAllBerriesWithData = () => {
           fetchAllBerriesData({ berryName: berry.name })
         )
       );
+      const detailedItems = await Promise.all(
+        detailed.map((detail: any) =>
+          detail.item?.url 
+            ? fetch(detail.item.url).then(res => res.json())
+            : Promise.resolve(null)
+        )
+      );
       return berries.map((berry: PokeAPI.Berry, idx: number) => ({
         ...berry,
         details: detailed[idx],
+        item: detailedItems[idx],
       }));
     },
   });
