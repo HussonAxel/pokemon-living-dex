@@ -43,6 +43,7 @@ import {
 
 import { useGetAllBerriesWithData } from "@/data/queries/pokemons"
 import { PokeAPI } from "pokeapi-types";
+import { Link } from "@tanstack/react-router"
 
 declare module "@tanstack/react-table" {
   interface ColumnMeta<TData extends RowData, TValue> {
@@ -64,7 +65,6 @@ type Item = {
   growthTime: number
   maxHarvest: number
   naturalGiftPower: number
-  naturalGiftType: string
   size: number
   smoothness: number
   soilDryness: number
@@ -174,24 +174,6 @@ const columns: ColumnDef<Item>[] = [
     },
   },
   {
-    header: "Natural Gift Power",
-    accessorKey: "naturalGiftPower",
-    cell: ({ row }) => <div>{row.getValue("naturalGiftPower")}</div>,
-    meta: {
-      filterVariant: "range",
-    },
-  },
-  {
-    header: "Natural Gift Type",
-    accessorKey: "naturalGiftType",
-    cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("naturalGiftType")}</div>
-    ),
-    meta: {
-      filterVariant: "select",
-    },
-  },
-  {
     header: "Size",
     accessorKey: "size",
     cell: ({ row }) => <div>{row.getValue("size")} cm</div>,
@@ -258,9 +240,6 @@ function BerriesTableContent({ items }: { items: Item[] }) {
           <Filter column={table.getColumn("firmness")!} />
         </div>
         {/* Natural Gift Type select */}
-        <div className="w-36">
-          <Filter column={table.getColumn("naturalGiftType")!} />
-        </div>
         {/* Growth Time range */}
         <div className="w-36">
           <Filter column={table.getColumn("growthTime")!} />
@@ -344,16 +323,19 @@ function BerriesTableContent({ items }: { items: Item[] }) {
         <TableBody>
           {table.getRowModel().rows?.length ? (
             table.getRowModel().rows.map((row) => (
-              <TableRow
-                key={row.id}
-                data-state={row.getIsSelected() && "selected"}
-              >
-                {row.getVisibleCells().map((cell) => (
-                  <TableCell key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </TableCell>
-                ))}
-              </TableRow>
+              <Link key={row.id} to={`/berries/${row.original.name}`} className="contents">
+                <TableRow
+                  key={row.id}
+                  data-state={row.getIsSelected() && "selected"}
+                  className="cursor-pointer hover:bg-muted/50 transition-colors"
+                >
+                  {row.getVisibleCells().map((cell) => (
+                    <TableCell key={cell.id}>
+                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              </Link>
             ))
           ) : (
             <TableRow>
@@ -385,8 +367,6 @@ export default function BerriesTable() {
     flavors: berry.details?.flavors || [],
     growthTime: berry.details?.growth_time || 0,
     maxHarvest: berry.details?.max_harvest || 0,
-    naturalGiftPower: berry.details?.natural_gift_power || 0,
-    naturalGiftType: berry.details?.natural_gift_type?.name || "unknown",
     size: berry.details?.size || 0,
     smoothness: berry.details?.smoothness || 0,
     soilDryness: berry.details?.soil_dryness || 0,

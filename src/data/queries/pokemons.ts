@@ -11,7 +11,9 @@ export const QUERY_KEYS = {
   MOVES: 'moves',
   TYPES: 'types',
   BERRIES: 'berries',
-  BERRIES_DATA: 'berriesData'
+  BERRIES_DATA: 'berriesData',
+  BERRY: 'berry',
+  BERRY_DATA: 'berryData',
 }
 
 //──────────────────────────────────────────────────────────────────────────────
@@ -168,6 +170,20 @@ export const useGetAllBerriesWithData = () => {
     },
   });
 };
+
+export const useGetAllBerryData = ({ berryName }: { berryName: string }) => {
+  return useQuery({
+    queryKey: [QUERY_KEYS.BERRY_DATA, berryName],
+    queryFn: async () => {
+      const berry = await fetchAllBerriesData({ berryName })
+      const item = await fetch(berry.item.url).then(res => res.json())
+      return {
+        ...berry,
+        item: item,
+      }
+    }
+  })
+}
 
 export const useGetAllPokemons = () => {
   return useQuery({
