@@ -124,9 +124,6 @@ function AbilitiesTableContent({ items }: { items: AbilityItem[] }) {
     getFacetedMinMaxValues: getFacetedMinMaxValues(),
     onSortingChange: setSorting,
     enableSortingRemoval: false,
-    filterFns: {
-      fuzzy: fuzzyFilter,
-    },
   })
 
   return (
