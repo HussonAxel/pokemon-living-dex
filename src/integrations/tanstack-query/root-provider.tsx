@@ -6,6 +6,13 @@ import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client
 
 export function getContext() {
   const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        staleTime: 1000 * 60 * 60, // 1 heure
+        gcTime: 1000 * 60 * 60 * 24 * 7, // 7 jours
+        retry: 1,
+      },
+    },
   })
 
   const localStoragePersister = createAsyncStoragePersister({
