@@ -1,6 +1,7 @@
 "use client"
 
 import { useId, useMemo, useState } from "react"
+import { useQuery } from "@tanstack/react-query"
 import {
   Column,
   ColumnDef,
@@ -41,7 +42,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { Link } from "@tanstack/react-router"
-import { useGetAllAbilitiesWithData } from "@/data/queries/pokemons"
+import { abilitiesQueryOptions } from "@/data/queries/pokemons"
 
 declare module "@tanstack/react-table" {
   interface ColumnMeta<TData extends RowData, TValue> {
@@ -123,6 +124,9 @@ function AbilitiesTableContent({ items }: { items: AbilityItem[] }) {
     getFacetedMinMaxValues: getFacetedMinMaxValues(),
     onSortingChange: setSorting,
     enableSortingRemoval: false,
+    filterFns: {
+      fuzzy: fuzzyFilter,
+    },
   })
 
   return (
@@ -241,7 +245,7 @@ function AbilitiesTableContent({ items }: { items: AbilityItem[] }) {
 }
 
 export default function AbilitiesTable() {
-  const { data, isLoading, error } = useGetAllAbilitiesWithData()  
+  const { data, isLoading, error } = useQuery(abilitiesQueryOptions())
   const filteredData = data?.filter(
     (ability: any) => {
       const effectEntry = ability.details?.effect_entries.find((entry: any) => entry.language.name === "en")
