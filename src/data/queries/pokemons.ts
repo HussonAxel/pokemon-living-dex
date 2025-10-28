@@ -17,6 +17,14 @@ export const QUERY_KEYS = {
   BERRY_DATA: 'berryData',
 }
 
+const STATIC_QUERY_OPTIONS = {
+  staleTime: Infinity,
+  gcTime: 1000 * 60 * 60 * 24 * 365,
+  refetchOnMount: false,
+  refetchOnWindowFocus: false,
+  refetchOnReconnect: false,
+}
+
 //──────────────────────────────────────────────────────────────────────────────
 // FONCTIONS FETCH
 //──────────────────────────────────────────────────────────────────────────────
@@ -27,6 +35,7 @@ const res = await fetch(`${BASE_POKEAPI_URL}/ability?limit=-1`)
 if (!res.ok) {
   throw new Error('Failed to fetch abilities')
 }
+STATIC_QUERY_OPTIONS
 const data = await res.json()
 return data.results
 }
@@ -114,35 +123,35 @@ export const useGetAllAbilities = () => {
   return useQuery({
     queryKey: [QUERY_KEYS.ABILITIES],
     queryFn: fetchAllAbilities,
-    placeholderData: (prev) => prev,
-    refetchOnMount: false,
+    ...STATIC_QUERY_OPTIONS,
   })
 }
 
-export const useGetAllAbilitiesWithData = () => {
-  return useQuery({
-    queryKey: ["abilities-all"],
-    queryFn: async () => {
-      const abilities = await fetchAllAbilities();
-      const detailed = await Promise.all(
-        abilities.map((ability: PokeAPI.Ability) =>
-          fetchAllAbilityData({ abilityName: ability.name })
-        )
-      );
-      return abilities.map((ability: PokeAPI.Ability, idx: number) => ({
-        ...ability,
-        details: detailed[idx],
-      }));
-    },
-  });
-};
+
+
+export const abilitiesQueryOptions = () => ({
+  queryKey: [QUERY_KEYS.ABILITY_DATA],
+  queryFn: async () => {
+    const abilities = await fetchAllAbilities()
+    const detailed = await Promise.all(
+      abilities.map((ability: PokeAPI.Ability) =>
+        fetchAllAbilityData({ abilityName: ability.name })
+      )
+    )
+    return abilities.map((ability: PokeAPI.Ability, idx: number) => ({
+      ...ability,
+      details: detailed[idx],
+    }))
+  },
+  ...STATIC_QUERY_OPTIONS,
+})
+
 
 export const useGetAllItems = () => {
   return useQuery({
     queryKey: [QUERY_KEYS.ITEMS],
     queryFn: fetchAllItems,
-    placeholderData: (prev) => prev,
-    refetchOnMount: false,
+    ...STATIC_QUERY_OPTIONS,
   })
 }
 
@@ -150,8 +159,7 @@ export const useGetAllMoves = () => {
   return useQuery({
     queryKey: [QUERY_KEYS.MOVES],
     queryFn: fetchAllMoves,
-    placeholderData: (prev) => prev,
-    refetchOnMount: false,
+    ...STATIC_QUERY_OPTIONS,
   })
 }
 
@@ -159,8 +167,7 @@ export const useGetAllTypes = () => {
   return useQuery({
     queryKey: [QUERY_KEYS.TYPES],
     queryFn: fetchAllTypes,
-    placeholderData: (prev) => prev,
-    refetchOnMount: false,
+    ...STATIC_QUERY_OPTIONS,
   })
 }
 
@@ -168,14 +175,13 @@ export const useGetAllBerries = () => {
   return useQuery({
     queryKey: [QUERY_KEYS.BERRIES],
     queryFn: fetchAllBerries,
-    placeholderData: (prev) => prev,
-    refetchOnMount: false,
+    ...STATIC_QUERY_OPTIONS,
   })
 }
 
 export const useGetAllBerriesWithData = () => {
   return useQuery({
-    queryKey: ["berries-all"],
+    queryKey: [QUERY_KEYS.BERRY_DATA],
     queryFn: async () => {
       const berries = await fetchAllBerries();
       const detailed = await Promise.all(
@@ -196,6 +202,7 @@ export const useGetAllBerriesWithData = () => {
         item: detailedItems[idx],
       }));
     },
+    ...STATIC_QUERY_OPTIONS,
   });
 };
 
@@ -217,8 +224,7 @@ export const useGetAllPokemons = () => {
   return useQuery({
     queryKey: ['pokemons'],
     queryFn: fetchAllPokemons,
-    placeholderData: (prev) => prev,
-    refetchOnMount: false,
+    ...STATIC_QUERY_OPTIONS,
   })
 }
 
@@ -226,8 +232,7 @@ export const useGetPokemonsByRange = (offset: number, limit: number) => {
   return useQuery({
     queryKey: ['pokemonByRange', offset, limit],
     queryFn: () => fetchPokemonByRange(offset, limit),
-    placeholderData: (prev) => prev,
-    refetchOnMount: false,
+    ...STATIC_QUERY_OPTIONS,
   })
 }
 
@@ -239,7 +244,7 @@ export const usePrefetchAllBerriesWithData = () => {
   const qc = useQueryClient()
   return () =>
     qc.ensureQueryData({
-      queryKey: ['berries-all'],
+      queryKey: [QUERY_KEYS.BERRY_DATA],
       queryFn: async () => {
         const berries = await fetchAllBerries();
         const detailed = await Promise.all(
@@ -259,7 +264,7 @@ export const usePrefetchAllAbilitiesWithData = () => {
   const qc = useQueryClient() 
   return () => 
     qc.ensureQueryData({
-      queryKey: ['abilities-all'],
+      queryKey: [QUERY_KEYS.ABILITY_DATA],
       queryFn: async() => {
         const abilities = await fetchAllAbilities();
         const detailed = await Promise.all(
@@ -279,7 +284,7 @@ export const usePrefetchAllPokemons = () => {
   const qc = useQueryClient()
   return () =>
     qc.ensureQueryData({
-      queryKey: ['pokemons'],
+      queryKey: [QUERY_KEYS.POKEMONS],
       queryFn: fetchAllPokemons,
     })
 }
@@ -288,7 +293,7 @@ export const usePrefetchPokemonsByRange = (offset: number, limit: number) => {
   const qc = useQueryClient()
   return () =>
     qc.ensureQueryData({
-      queryKey: ['pokemonByRange', offset, limit],
+      queryKey: [QUERY_KEYS.POKEMON_BY_RANGE, offset, limit],
       queryFn: () => fetchPokemonByRange(offset, limit),
     })
 }
