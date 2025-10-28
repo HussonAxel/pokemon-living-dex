@@ -31,7 +31,7 @@ const STATIC_QUERY_OPTIONS = {
 //
 
 export const fetchAllAbilities = async () => {
-const res = await fetch(`${BASE_POKEAPI_URL}/ability?limit=-1`)
+const res = await fetch(`${BASE_POKEAPI_URL}/ability?limit=50`)
 if (!res.ok) {
   throw new Error('Failed to fetch abilities')
 }
