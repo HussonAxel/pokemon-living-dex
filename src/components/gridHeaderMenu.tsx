@@ -1,19 +1,25 @@
 import { Link } from '@tanstack/react-router'
 import { headerLinks } from '@/data/consts/headerLinks'
-import { usePrefetchAllBerriesWithData } from '@/data/queries/pokemons'
+import { usePrefetchAllBerriesWithData, usePrefetchAllAbilitiesWithData } from '@/data/queries/pokemons'
 
 interface gridHeaderMenuProps {}
 
 export default function GridHeaderMenu({}: gridHeaderMenuProps) {
+  const prefetchAbilities = usePrefetchAllAbilitiesWithData()
+  const prefetchBerries = usePrefetchAllBerriesWithData()
+
+  const prefetchFnMap: Record<string, () => void> = {
+    'abilities': () => prefetchAbilities(),
+    'berries': () => prefetchBerries(),
+  }
+
   const homePage = headerLinks[0]
 
   return (
     <nav className="h-screen">
       <div className="flex flex-col md:h-full md:gap-4 xl:flex-row mx-4 md:mx-12">
         <div className="w-full xl:w-[700px] flex-shrink-0 mb-8 md:mb-0 mt-12 xl:my-12">
-          <Link
-            to={'/'}
-          >
+          <Link to={'/'}>
             <div className="border-[0.5px] border-black rounded-[20px] h-full p-6 transition-colors duration-500 ease-in-out hover:bg-[#ef4036] hover:text-white flex flex-col hover:cursor-pointer">
               <div className="flex flex-col justify-between h-full">
                 <div className="flex flex-row justify-between">
@@ -34,7 +40,7 @@ export default function GridHeaderMenu({}: gridHeaderMenuProps) {
             {headerLinks.slice(1).map((link) => (
               <Link
                 to={link.slug}
-                onMouseEnter={usePrefetchAllBerriesWithData()}
+                onMouseEnter={prefetchFnMap[link.slug] || undefined}
               >
                 <div className="border-[0.5px] border-black rounded-[20px] p-6 transition-colors duration-500 ease-in-out hover:bg-[#ef4036] hover:text-white hover:cursor-pointer flex flex-col h-40 md:h-80">
                   <div className="flex flex-col justify-between h-full">

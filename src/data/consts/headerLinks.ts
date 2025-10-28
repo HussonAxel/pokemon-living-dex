@@ -3,6 +3,7 @@ interface HeaderLinksProps {
   name: string
   slug: string
   description: string
+  prefetchFn?: () => void
 }
 
 export const headerLinks: HeaderLinksProps[] = [
@@ -65,6 +66,7 @@ export const headerLinks: HeaderLinksProps[] = [
     name: 'Berries',
     slug: 'berries',
     description: 'Discover all the berries available in the Pokémon games.',
+
   },
   {
     id: 11,

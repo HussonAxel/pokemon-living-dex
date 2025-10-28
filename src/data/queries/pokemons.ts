@@ -255,6 +255,26 @@ export const usePrefetchAllBerriesWithData = () => {
     })
 }
 
+export const usePrefetchAllAbilitiesWithData = () => {
+  const qc = useQueryClient() 
+  return () => 
+    qc.ensureQueryData({
+      queryKey: ['abilities-all'],
+      queryFn: async() => {
+        const abilities = await fetchAllAbilities();
+        const detailed = await Promise.all(
+          abilities.map((ability: PokeAPI.Ability) =>
+            fetchAllAbilityData({ abilityName: ability.name })
+          )
+        );
+        return (abilities.map((ability: PokeAPI.Ability, idx: number) => ({
+          ...ability,
+          details: detailed[idx],
+        })));
+      }
+    })
+}
+
 export const usePrefetchAllPokemons = () => {
   const qc = useQueryClient()
   return () =>
