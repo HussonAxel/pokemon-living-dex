@@ -18,7 +18,7 @@ export default function GridHeaderMenu({}: gridHeaderMenuProps) {
   return (
     <nav className="h-screen">
       <div className="flex flex-col md:h-full md:gap-4 xl:flex-row mx-4 md:mx-12">
-        <div className="w-full xl:w-[700px] flex-shrink-0 mb-8 md:mb-0 mt-12 xl:my-12">
+        <div className="w-full xl:w-[600px] flex-shrink-0 mb-8 md:mb-0 mt-12 xl:my-12">
           <Link to={'/'}>
             <div className="border-[0.5px] border-black rounded-[20px] h-full p-6 transition-colors duration-500 ease-in-out hover:bg-[#ef4036] hover:text-white flex flex-col hover:cursor-pointer">
               <div className="flex flex-col justify-between h-full">
