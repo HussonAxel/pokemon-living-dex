@@ -13,7 +13,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { abilitiesQueryOptions } from "@/data/queries/pokemons"
+import { abilitiesListQueryOptions } from "@/data/queries/abilities-optimized"
 
 type AbilityItem = {
   id: number
@@ -209,7 +209,8 @@ function AbilitiesContent({ items }: { items: AbilityItem[] }) {
             {filteredItems.map((item) => (
               <Link
                 key={item.id}
-                to={`/abilities/${item.name}`}
+                to="/abilities/$ability"
+                params={{ ability: item.name }}
                 className="block p-4 rounded-lg border bg-card hover:bg-muted/50 transition-colors cursor-pointer"
               >
                 <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
@@ -244,7 +245,7 @@ function AbilitiesContent({ items }: { items: AbilityItem[] }) {
 }
 
 export default function AbilitiesTable() {
-  const { data, isLoading, error } = useQuery(abilitiesQueryOptions())
+  const { data, isLoading, error } = useQuery(abilitiesListQueryOptions())
   const filteredData = data?.filter(
     (ability: any) => {
       const effectEntry = ability.details?.effect_entries.find((entry: any) => entry.language.name === "en")

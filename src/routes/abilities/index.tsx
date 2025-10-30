@@ -1,10 +1,10 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { abilitiesQueryOptions } from '@/data/queries/pokemons'
+import { abilitiesListQueryOptions } from '@/data/queries/abilities-optimized'
 import AbilitiesTable from '@/components/abilitiesTable'
 
 export const Route = createFileRoute('/abilities/')({
   loader: async ({ context }) => {
-    return await context.queryClient.ensureQueryData(abilitiesQueryOptions())
+    return await context.queryClient.ensureQueryData(abilitiesListQueryOptions())
   },
   component: RouteComponent,
 })
