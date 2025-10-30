@@ -1,37 +1,39 @@
 import { os } from '@orpc/server'
 import * as z from 'zod'
-
-// TODO: En production, remplacer par une requête Drizzle ORM à Neon
-// const abilities = await db.query.abilities.findMany({ with: { pokemon: true } })
-const getAbilitiesFromAPI = async () => {
-  const res = await fetch('https://pokeapi.co/api/v2/ability?limit=-1')
-  const data = await res.json()
-
-  // Consolidation côté serveur: une seule boucle Promise.all
-  const detailed = await Promise.all(
-    data.results.map((ability: any) =>
-      fetch(`https://pokeapi.co/api/v2/ability/${ability.name}`)
-        .then(r => r.json())
-    )
-  )
-
-  return data.results.map((ability: any, idx: number) => ({
-    ...ability,
-    details: detailed[idx],
-  }))
-}
+import { db } from '@/db/index'
+import { abilities as abilitiesTable } from '@/db/schema'
+import { eq } from 'drizzle-orm'
 
 export const listAbilities = os
   .input(z.object({}))
   .handler(async () => {
-    console.log('[oRPC] listAbilities called')
-    return await getAbilitiesFromAPI()
+    console.log('[oRPC] listAbilities called - querying Neon database')
+    
+    try {
+      const data = await db.select().from(abilitiesTable)
+      console.log(`[oRPC] ✅ Fetched ${data.length} abilities from database`)
+      return data
+    } catch (error) {
+      console.error('[oRPC] ❌ Error fetching abilities:', error)
+      throw error
+    }
   })
 
 export const getAbilityByName = os
   .input(z.object({ name: z.string() }))
   .handler(async ({ input }) => {
     console.log(`[oRPC] getAbilityByName called with name: ${input.name}`)
-    const abilities = await getAbilitiesFromAPI()
-    return abilities.find((a: any) => a.name === input.name)
+    
+    try {
+      const ability = await db
+        .select()
+        .from(abilitiesTable)
+        .where(eq(abilitiesTable.name, input.name))
+        .limit(1)
+      
+      return ability[0] || null
+    } catch (error) {
+      console.error(`[oRPC] ❌ Error fetching ability ${input.name}:`, error)
+      throw error
+    }
   })
